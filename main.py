@@ -3,6 +3,7 @@ import random
 import csv
 import pathlib
 import datetime
+import textwrap
 #import pandas as pd
 
 subj_info = {"参加者ID":'', "年齢":'', "性別": ["男性", "女性", "その他", "未回答"]}
@@ -27,7 +28,7 @@ with open('stims_v2.csv','r', encoding = 'utf-8-sig') as f:
     header = next(reader)
     for row in reader:
         sentence.append(row)
-        sentence.append(row)
+
 win = visual.Window()
 
 sentence_stim = visual.TextStim(win) 
@@ -46,7 +47,8 @@ timeStamped = stopwatch
 
 for line in range(0,52):
     for column in range(1, 7):
-        sentence_stim = visual.TextStim(win, sentence[line][column])
+        text = textwrap.wrap(sentence[line][column],20)
+        sentence_stim = visual.TextStim(win, '\n'.join(text))
         sentence_stim.draw()
         win.flip()
         data = '{},{}-{}\n'.format(stopwatch.getTime(),sentence[line][0],header[column] )
